@@ -29,14 +29,14 @@ export default {
           name: "細雨　悠里(ささめ　ゆうり)",
           pl: "ハム",
           charaId: "4271251",
-          islost: false
+          islost: true
         },
         {
           title: "HO3",
           name: "森田 陽平(もりた ようへい)",
           pl: "塩田紺",
           charaId: "4271421",
-          islost: false
+          islost: true
         },
         {
           title: "HO4",
