@@ -4,6 +4,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import index from '@/pages/index'
 import inou2 from '@/pages/trpgs/inou2'
+import ga1 from '@/pages/trpgs/ga1'
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -20,6 +21,11 @@ export default new Router({
             path: "/inou2",
             name: "inou2",
             component: inou2
+        },
+        {
+            path: "/ga1",
+            name: "ga1",
+            component: ga1
         }
     ],
     scrollBehavior() {

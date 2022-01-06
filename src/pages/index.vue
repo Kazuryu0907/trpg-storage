@@ -1,12 +1,5 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
-    </nav>
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <button class="btn btn-primary">bootstrap</button>
-    <b-button variant="primary">bootstrap</b-button>
     <b-container fluid="md">
       <b-tabs align="center" pills>
         <b-row>
@@ -60,41 +53,35 @@
               </div>
             </b-card>
           </b-col>
-          <b-col md="4">
-            <div class="card text-center">
-              <div class="sample1">
-                <img class="card-img-top" src="../imgs/1.webp" alt="Image" />
-                <div class="mask">
-                  <div class="caption">
-                    HO1 らむね<br />HO2 ワシントン<br />HO3 kazuryu<br />HO4
-                    綾鷹
-                  </div>
-                </div>
-              </div>
-              <div class="card-body mx-auto">
-                <h4 class="card-title">異能警察</h4>
-                <p class="card-text">第2陣</p>
-                <div class="mx-auto">
-                  <b-button-group>
-                    <router-link to="/inou2">
-                      <b-button variant="outline-primary">詳しく</b-button>
-                    </router-link>
-                    <b-button v-b-toggle.collapse-1 variant="outline-info"
-                      >Member</b-button
-                    >
-                  </b-button-group>
-                  <b-collapse id="collapse-1" class="mt-2">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">HO1</li>
-                      <li class="list-group-item">HO2</li>
-                      <li class="list-group-item">HO3</li>
-                      <li class="list-group-item">HO4</li>
-                    </ul>
-                  </b-collapse>
-                </div>
-              </div>
-            </div>
-          </b-col>
+  <b-col md="4">
+    <b-card
+      title="異能警察"
+      img-src="@/imgs/1.webp"
+      img-alt="Image"
+      img-top
+      class="mb-2"
+    >
+      <b-card-text> 第2陣 </b-card-text>
+      <div class="mx-auto">
+        <b-button-group>
+          <router-link to="linkto">
+            <b-button variant="outline-primary">詳しく</b-button>
+          </router-link>
+          <b-button v-b-toggle.collapse-1 variant="outline-info"
+            >Member</b-button
+          >
+        </b-button-group>
+        <b-collapse id="collapse-1" class="mt-2">
+          <b-list-group flush class="text-left">
+            <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
+              ><span>HO{{ index + 1 }}：</span>{{pl.pl}}</b-list-group-item
+            >
+          </b-list-group>
+        </b-collapse>
+      </div>
+    </b-card>
+  </b-col>
+
         </b-row>
       </b-tabs>
     </b-container>
@@ -118,7 +105,6 @@
               >Menber</b-button
             >
           </b-button-group>
-          <b-collapse id="demo1">AAAAAAAA</b-collapse>
         </b-card>
         <b-card
           title="cat"
@@ -152,13 +138,46 @@
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
+
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
   },
+  data () {
+    return {
+      PLs: [
+        {
+          title: "HO1",
+          name: "石光　正義(いしびかり　まさよし(33))",
+          pl: "らむね",
+          charaId: "4273520",
+          islost: false
+        },
+        {
+          title: "HO2",
+          name: "山白　雄輝(やましろ　ゆうき(27))",
+          pl: "ワシントン",
+          charaId: "4294395",
+          islost: false
+        },
+        {
+          title: "HO3",
+          name: "辻川　哲(つじかわ　あきら(27))",
+          pl: "kazuryu",
+          charaId: "4292370",
+          islost: false
+        },
+        {
+          title: "HO4",
+          name: "東野　勿草(ひがしの　なぐさ(25))",
+          pl: "綾鷹",
+          charaId: "4294141",
+          islost: false
+        },
+      ]
+    }
+  }
 };
 </script>
 
@@ -169,7 +188,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 
 #card-img {
