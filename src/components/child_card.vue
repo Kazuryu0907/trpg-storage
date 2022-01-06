@@ -41,7 +41,7 @@
           v-if="youtube != ''"
           type="iframe"
           aspect="16by9"
-          src="youtube"
+          :src="youtube"
           allowfullscreen
         ></b-embed
         >
