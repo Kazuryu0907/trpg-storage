@@ -1,7 +1,8 @@
 module.exports = {
-  publicPath: '/bv',
+  // publicPath: '/bv',
   outputDir: 'docs',
   assetsDir: "./",
+  publicPath: process.env.NODE_ENV === 'production' ? '/subfolder/' : '/',
   filenameHashing: false,
   productionSourceMap: false,
   chainWebpack: config => {
