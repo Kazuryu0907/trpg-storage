@@ -67,7 +67,7 @@ export default {
     var collapseid = "collapseid"+this.linkto.slice(1);
     console.log(collapseid);
     return {
-      isexpand: true
+      isexpand: false
     };
   },
   methods: {

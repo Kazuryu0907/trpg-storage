@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <b-container fluid="md">
+      <h1 class="mb-10 mt-11"><strong>TRPG保管庫</strong></h1>
       <b-tabs align="center" pills>
         <b-row>
           <maincard
@@ -16,35 +17,12 @@
             linkto="/ga1"
             :PLs="['zenon','ハム','kazuryu']"
           />
-          <b-col md="4">
-            <b-card
-              title="異能警察"
-              img-src="@/imgs/1.webp"
-              img-alt="Image"
-              img-top
-              class="mb-2"
-            >
-              <b-card-text> 第2陣 </b-card-text>
-              <div class="mx-auto">
-                <b-button-group>
-                  <router-link to="linkto">
-                    <b-button variant="outline-primary">詳しく</b-button>
-                  </router-link>
-                  <b-button v-b-toggle.collapse-1 variant="outline-info"
-                    >Member</b-button
-                  >
-                </b-button-group>
-                <b-collapse id="collapse-1" class="mt-2">
-                  <b-list-group flush class="text-left">
-                    <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
-                      ><span>HO{{ index + 1 }}：</span
-                      >{{ pl.pl }}</b-list-group-item
-                    >
-                  </b-list-group>
-                </b-collapse>
-              </div>
-            </b-card>
-          </b-col>
+          <maincard
+            title="「沼男は誰だ？」"
+            :img="require('@/imgs/numa1/main.webp')"
+            linkto="/numa1"
+            :PLs="['zenon','ハム','塩田紺','朔間 棗']"
+          />
         </b-row>
       </b-tabs>
     </b-container>
