@@ -1,7 +1,9 @@
 module.exports = {
-  publicPath: './',
+  publicPath: '/bv',
   outputDir: 'docs',
   assetsDir: "./",
+  filenameHashing: false,
+  productionSourceMap: false,
   chainWebpack: config => {
     config.module
       .rule('vue')
