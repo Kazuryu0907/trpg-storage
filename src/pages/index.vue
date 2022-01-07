@@ -88,36 +88,6 @@ export default {
   },
   data() {
     return {
-      PLs: [
-        {
-          title: "HO1",
-          name: "石光　正義(いしびかり　まさよし(33))",
-          pl: "らむね",
-          charaId: "4273520",
-          islost: false,
-        },
-        {
-          title: "HO2",
-          name: "山白　雄輝(やましろ　ゆうき(27))",
-          pl: "ワシントン",
-          charaId: "4294395",
-          islost: false,
-        },
-        {
-          title: "HO3",
-          name: "辻川　哲(つじかわ　あきら(27))",
-          pl: "kazuryu",
-          charaId: "4292370",
-          islost: false,
-        },
-        {
-          title: "HO4",
-          name: "東野　勿草(ひがしの　なぐさ(25))",
-          pl: "綾鷹",
-          charaId: "4294141",
-          islost: false,
-        },
-      ],
     };
   },
 };
