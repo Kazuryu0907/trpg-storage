@@ -1,5 +1,5 @@
 <template>
-  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg"/>
+  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp"/>
 </template>
 
 <script>
@@ -9,12 +9,13 @@ export default {
     return {
       carrouselimg:[
         {
-          src: require("@/imgs/numa1/C1.png")
+          src: require("@/imgs/numa1/C1.webp")
         }
       ],
       title: "「沼男は誰だ？」",
-      img: "require('@/imgs/numa1/C1.png')",
+      img: "require('@/imgs/numa1/main.webp')",
       linkto: "/numa1",
+      kp: "鋼鉄",
       youtube: "https://www.youtube.com/embed/99iNIeyf8Mc?rel=0",
       PLs: [
         {

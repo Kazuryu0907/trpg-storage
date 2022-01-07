@@ -1,5 +1,5 @@
 <template>
-  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg"/>
+  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp"/>
 </template>
 
 <script>
@@ -16,6 +16,7 @@ export default {
       img: "require('@/imgs/inou2/main.webp')",
       linkto: "/inou2",
       youtube: "",
+      kp: "鋼鉄",
       PLs: [
         {
           title: "HO1",

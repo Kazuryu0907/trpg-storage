@@ -1,4 +1,6 @@
 module.exports = {
+  publicPath: '/trpg/',
+  outputDir: 'docs',
   chainWebpack: config => {
     config.module
       .rule('vue')

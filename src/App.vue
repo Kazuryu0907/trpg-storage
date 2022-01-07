@@ -5,6 +5,10 @@
       <b-navbar-nav>
         <b-nav-item href="/">TRPGｻﾞｧﾊﾞｧ</b-nav-item>
       </b-navbar-nav>
+      <b-navbar-nav class="ml-auto"
+      >
+      <b-nav-item href="#">目安箱</b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
       <router-view/>
     </v-main>

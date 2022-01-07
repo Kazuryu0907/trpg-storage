@@ -1,5 +1,5 @@
 <template>
-  <childpage :title="title" :img="img" :linkto="linkto" :PLs="PLs" :carrouselimg="carrouselimg"/>
+  <childpage :title="title" :img="img" :linkto="linkto" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp"/>
 </template>
 
 <script>
@@ -21,6 +21,7 @@ export default {
       title: "蛾と踊る",
       img: "require('@/imgs/ga1/C1.webp')",
       linkto: "/ga1",
+      kp: "鋼鉄",
       PLs: [
         {
           title: "HO1",

@@ -8,6 +8,7 @@
         <strong>{{ title }}</strong>
       </h1>
       <h3 class="mb-4">vol.{{ number }}</h3>
+      <h4 class="mt-2">KP:<strong>{{ kp }}</strong></h4>
       <b-card-group>
         <b-card
           v-for="(pl, index) in PLs"
@@ -100,6 +101,11 @@ export default {
       default: "",
       require: false,
     },
+    kp: {
+      type: String,
+      default: "",
+      require: false
+    }
   },
   components: {
     Carrousel,
