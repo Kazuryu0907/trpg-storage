@@ -21,7 +21,7 @@
           </template>
           <b-card-sub-title
             >HO{{ index + 1 }}<br />
-            <b-badge v-if="!pl.islost" variant="success">alive</b-badge>
+            <b-badge v-if="!pl.islost" variant="success">survival</b-badge>
             <b-badge v-else variant="danger">lost</b-badge>
           </b-card-sub-title>
           <b-card-text

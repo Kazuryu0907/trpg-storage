@@ -12,9 +12,6 @@ export default {
           src: require("@/imgs/ga1/C2.webp")
         },
         {
-          src: require("@/imgs/ga1/C2.webp")
-        },
-        {
           src: require("@/imgs/ga1/C3.webp")
         },
       ],

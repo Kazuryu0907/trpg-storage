@@ -7,6 +7,7 @@ import index from '@/pages/index'
 import inou2 from '@/pages/trpgs/inou2'
 import ga1 from '@/pages/trpgs/ga1'
 import numa1 from '@/pages/trpgs/numa1'
+import yoi1 from '@/pages/trpgs/yoi1'
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -34,6 +35,11 @@ export default new Router({
             path: "/numa1",
             name: "numa1",
             component: numa1
+        },
+        {
+            path: "/yoi1",
+            name: "yoi1",
+            component: yoi1
         }
     ],
     scrollBehavior() {

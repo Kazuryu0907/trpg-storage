@@ -24,57 +24,16 @@
             :PLs="['zenon','ハム','塩田紺','朔間 棗']"
           />
         </b-row>
+        <b-row>
+          <maincard
+           title="宵闇の嘘"
+           :img="require('@/imgs/yoi1/main.webp')"
+           linkto="/yoi1"
+           :PLs="['ワシントン','らむね','kazuryu','綾鷹']"
+           />
+        </b-row>
       </b-tabs>
     </b-container>
-    <div class="mx-auto">
-      <b-card-group deck>
-        <b-card
-          title="cat"
-          img-src="../imgs/mj_3ds_1.webp"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem"
-          class="mb-2"
-        >
-          <b-card-text> 第2陣 </b-card-text>
-          <b-button-group class="mt-3">
-            <b-button v-b-toggle.demo1 pill href="#" variant="outline-primary"
-              >詳しく</b-button
-            >
-            <b-button pill target="#demo1" variant="outline-info"
-              >Menber</b-button
-            >
-          </b-button-group>
-        </b-card>
-        <b-card
-          title="cat"
-          img-src="../imgs/mj_3ds_1.webp"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem"
-          class="mb-2"
-        >
-          <b-card-text> 第2陣 </b-card-text>
-
-          <b-button href="#" variant="primary">詳しく</b-button>
-        </b-card>
-        <b-card
-          title="cat"
-          img-src="../imgs/mj_3ds_1.webp"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem"
-          class="mb-2"
-        >
-          <b-card-text> 第2陣 </b-card-text>
-
-          <b-button href="#" variant="primary">詳しく</b-button>
-        </b-card>
-      </b-card-group>
-    </div>
   </div>
 </template>
 
