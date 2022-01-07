@@ -4,10 +4,13 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import index from '@/pages/index'
+import login from '@/pages/login'
 import inou2 from '@/pages/trpgs/inou2'
 import ga1 from '@/pages/trpgs/ga1'
 import numa1 from '@/pages/trpgs/numa1'
 import yoi1 from '@/pages/trpgs/yoi1'
+import void1 from '@/pages/trpgs/void1'
+
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -20,6 +23,11 @@ export default new Router({
             path: '/',
             name: 'index',
             component: index
+        },
+        {
+            path: "/login",
+            name: "login",
+            component: login
         },
         {
             path: "/inou2",
@@ -40,6 +48,11 @@ export default new Router({
             path: "/yoi1",
             name: "yoi1",
             component: yoi1
+        },
+        {
+            path: "/void1",
+            name: "void1",
+            component: void1
         }
     ],
     scrollBehavior() {

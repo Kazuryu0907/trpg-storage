@@ -4,7 +4,7 @@
       <b-navbar type="dark" variant="dark">
         <b-navbar-nav>
           <router-link to="/">
-            <b-nav-item to="/">{{ publicPath }}TRPGｻﾞｧﾊﾞｧ</b-nav-item>
+            <b-nav-item to="/">TRPGｻﾞｧﾊﾞｧ</b-nav-item>
           </router-link>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">

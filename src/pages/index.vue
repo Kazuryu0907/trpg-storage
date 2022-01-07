@@ -31,6 +31,12 @@
            linkto="/yoi1"
            :PLs="['ワシントン','らむね','kazuryu','綾鷹']"
            />
+           <maincard
+           title="void"
+           :img="require('@/imgs/void1/main.webp')"
+           linkto="/void1"
+           :PLs="['朔間 棗','ハム','鋼鉄','塩田紺']"
+           />
         </b-row>
       </b-tabs>
     </b-container>
