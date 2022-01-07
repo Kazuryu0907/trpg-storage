@@ -86,13 +86,13 @@ export default {
       require: true,
     },
     PLs: {
-      type: Object,
+      type: Array,
       default: new Array(),
       require: true,
     },
     carrouselimg: {
       type: Array,
-      default: new Object(),
+      default: new Array(),
       require: true,
     },
     youtube: {

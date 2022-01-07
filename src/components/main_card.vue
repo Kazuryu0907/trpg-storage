@@ -5,25 +5,35 @@
       <div class="mx-auto">
         <b-button-group>
           <router-link :to="linkto">
-            <b-button variant="outline-primary">詳しく</b-button>
+            <b-button variant="outline-primary" >詳しく</b-button>
           </router-link>
-          <b-button :v-b-toggle="collapseid" variant="outline-info"
+          <b-button v-on:click="expandcoll" variant="outline-info" :id="'btn'+collapseid"
             >Member</b-button
           >
         </b-button-group>
-        <b-collapse :id="collapseid" class="mt-2">
+        <b-collapse :visible="isexpand" class="mt-2">
+          <!-- <div class="collapse" id="collapseid"> -->
           <b-list-group flush class="text-left">
             <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
               ><span>HO{{ index + 1 }}：</span>{{ pl }}</b-list-group-item
             >
           </b-list-group>
+          <!-- </div> -->
         </b-collapse>
       </div>
     </b-card>
   </b-col>
 </template>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>
+// (function($){
+//   const card = $(`#${collapseid}`);
+//   $(`#btn${collapseid}`).on('click',(e) => {
+//     card.collapse("toggle");
+//   })
+// })(jQuery);
+
 export default {
   name: "MainCard",
   props: {
@@ -57,8 +67,13 @@ export default {
     var collapseid = "collapseid"+this.linkto.slice(1);
     console.log(collapseid);
     return {
-      collapseid
+      isexpand: true
     };
   },
+  methods: {
+    expandcoll: function(){
+      this.isexpand = !this.isexpand;
+    }
+  }
 };
 </script>
