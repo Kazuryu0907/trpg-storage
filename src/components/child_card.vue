@@ -12,10 +12,11 @@
         <b-card
           v-for="(pl, index) in PLs"
           :key="pl.name"
-          :img-src="require('@/imgs' + linkto + '/' + (index + 1) + '.png')"
+          :img-src="require('@/imgs' + linkto + '/' + (index + 1) + '.webp')"
         >
           <template #header>
             <h4>{{ pl.name }}</h4>
+            <h5>{{ pl.name_yomi}}</h5>   
           </template>
           <b-card-sub-title
             >HO{{ index + 1 }}<br />

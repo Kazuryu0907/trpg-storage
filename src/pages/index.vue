@@ -3,23 +3,23 @@
     <b-container fluid="md">
       <b-tabs align="center" pills>
         <b-row>
-          <b-col md="4">
-            <b-card
-              title="cat"
-              img-src="../imgs/mj_3ds_1.webp"
-              img-alt="Image"
-              img-top
-              id="card-img"
-            >
-              <b-card-text> 第2陣 </b-card-text>
-
-              <b-button href="#" variant="primary">詳しく</b-button>
-            </b-card>
-          </b-col>
+          <maincard
+            title="異能警察"
+            :img="require('@/imgs/inou2/main.webp')"
+            :number=2
+            linkto="/inou2"
+            :PLs="['らむね','ワシントン','kazuryu','綾鷹']"
+          />
+          <maincard
+            title="蛾と踊る"
+            :img="require('@/imgs/ga1/main.webp')"
+            linkto="/ga1"
+            :PLs="['zenon','ハム','kazuryu']"
+          />
           <b-col md="4">
             <b-card
               title="異能警察"
-              img-src="../imgs/1.webp"
+              img-src="@/imgs/1.webp"
               img-alt="Image"
               img-top
               class="mb-2"
@@ -27,7 +27,7 @@
               <b-card-text> 第2陣 </b-card-text>
               <div class="mx-auto">
                 <b-button-group>
-                  <router-link to="/inou2">
+                  <router-link to="linkto">
                     <b-button variant="outline-primary">詳しく</b-button>
                   </router-link>
                   <b-button v-b-toggle.collapse-1 variant="outline-info"
@@ -36,52 +36,15 @@
                 </b-button-group>
                 <b-collapse id="collapse-1" class="mt-2">
                   <b-list-group flush class="text-left">
-                    <b-list-group-item
-                      ><span>HO1：</span>らむね</b-list-group-item
-                    >
-                    <b-list-group-item
-                      ><span>HO2：</span>ワシントン</b-list-group-item
-                    >
-                    <b-list-group-item
-                      ><span>HO3：</span>kazuryu</b-list-group-item
-                    >
-                    <b-list-group-item
-                      ><span>HO4：</span>綾鷹</b-list-group-item
+                    <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
+                      ><span>HO{{ index + 1 }}：</span
+                      >{{ pl.pl }}</b-list-group-item
                     >
                   </b-list-group>
                 </b-collapse>
               </div>
             </b-card>
           </b-col>
-  <b-col md="4">
-    <b-card
-      title="異能警察"
-      img-src="@/imgs/1.webp"
-      img-alt="Image"
-      img-top
-      class="mb-2"
-    >
-      <b-card-text> 第2陣 </b-card-text>
-      <div class="mx-auto">
-        <b-button-group>
-          <router-link to="linkto">
-            <b-button variant="outline-primary">詳しく</b-button>
-          </router-link>
-          <b-button v-b-toggle.collapse-1 variant="outline-info"
-            >Member</b-button
-          >
-        </b-button-group>
-        <b-collapse id="collapse-1" class="mt-2">
-          <b-list-group flush class="text-left">
-            <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
-              ><span>HO{{ index + 1 }}：</span>{{pl.pl}}</b-list-group-item
-            >
-          </b-list-group>
-        </b-collapse>
-      </div>
-    </b-card>
-  </b-col>
-
         </b-row>
       </b-tabs>
     </b-container>
@@ -138,13 +101,14 @@
 </template>
 
 <script>
-
+import maincard from "../components/main_card.vue";
 
 export default {
   name: "App",
   components: {
+    maincard,
   },
-  data () {
+  data() {
     return {
       PLs: [
         {
@@ -152,32 +116,32 @@ export default {
           name: "石光　正義(いしびかり　まさよし(33))",
           pl: "らむね",
           charaId: "4273520",
-          islost: false
+          islost: false,
         },
         {
           title: "HO2",
           name: "山白　雄輝(やましろ　ゆうき(27))",
           pl: "ワシントン",
           charaId: "4294395",
-          islost: false
+          islost: false,
         },
         {
           title: "HO3",
           name: "辻川　哲(つじかわ　あきら(27))",
           pl: "kazuryu",
           charaId: "4292370",
-          islost: false
+          islost: false,
         },
         {
           title: "HO4",
           name: "東野　勿草(ひがしの　なぐさ(25))",
           pl: "綾鷹",
           charaId: "4294141",
-          islost: false
+          islost: false,
         },
-      ]
-    }
-  }
+      ],
+    };
+  },
 };
 </script>
 
