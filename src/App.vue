@@ -11,7 +11,9 @@
           <b-nav-item @click="logout">目安箱</b-nav-item>
         </b-navbar-nav>
       </b-navbar>
-      <router-view />
+      <div class="bg">
+        <router-view />
+      </div>
     </v-main>
   </v-app>
 </template>
