@@ -6,7 +6,7 @@
     <v-card-text>
         <v-form @submit.prevent="submit">
             <v-text-field prepend-icon="mdi-lock" label="password" v-model="password"/>
-            <b-alert v-if="!isAuth && count != 0" show variant="danger">パスワードが違います!</b-alert>
+            <b-alert v-if="!isAuth && count != 0" show variant="danger">パスワードが違うぞ</b-alert>
             <v-card-actions>
                 <v-btn class="warning" @click="submit">Login</v-btn>
             </v-card-actions>
