@@ -8,7 +8,9 @@
         <strong>{{ title }}</strong>
       </h1>
       <h3 class="mb-4">vol.{{ number }}</h3>
-      <h4 class="mt-2">KP:<strong>{{ kp }}</strong></h4>
+      <h4 class="mt-2">
+        KP:<strong>{{ kp }}</strong>
+      </h4>
       <b-card-group>
         <b-card
           v-for="(pl, index) in PLs"
@@ -17,7 +19,7 @@
         >
           <template #header>
             <h4>{{ pl.name }}</h4>
-            <h5>{{ pl.name_yomi}}</h5>   
+            <h5>{{ pl.name_yomi }}</h5>
           </template>
           <b-card-sub-title
             >HO{{ index + 1 }}<br />
@@ -37,18 +39,23 @@
           </b-list-group>
         </b-card>
       </b-card-group>
-      <h3 class="mb-5 mt-5">アーカイブ</h3>
-      <div>
-        <b-embed
-          v-if="youtube != ''"
-          type="iframe"
-          aspect="16by9"
-          :src="youtube"
-          allowfullscreen
-        ></b-embed
-        >
-        <h3 v-else class="mb-5">アップロード待ち...</h3>
-      </div>
+      <v-row>
+        <v-col>
+          <h3 class="mb-5 mt-5">MEMO</h3>
+          <slot name="memo" />
+        </v-col>
+        <v-col>
+          <h3 class="mb-5 mt-5">ARCHIVE</h3>
+            <b-embed
+              v-if="youtube != ''"
+              type="iframe"
+              aspect="16by9"
+              :src="youtube"
+              allowfullscreen
+            ></b-embed>
+            <h3 v-else class="mb-5 mt-5">アップロード待ち...</h3>
+        </v-col>
+      </v-row>
     </b-container>
   </div>
 </template>
@@ -104,8 +111,8 @@ export default {
     kp: {
       type: String,
       default: "",
-      require: false
-    }
+      require: false,
+    },
   },
   components: {
     Carrousel,

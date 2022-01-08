@@ -1,5 +1,11 @@
 <template>
-  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp"/>
+  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp">
+  <template v-slot:memo>
+    <b-list-group>
+      <b-list-group-item>Memoだよ</b-list-group-item>
+    </b-list-group>
+  </template>
+  </childpage>
 </template>
 
 <script>

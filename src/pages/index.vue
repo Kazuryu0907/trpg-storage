@@ -37,6 +37,12 @@
            linkto="/void1"
            :PLs="['朔間 棗','ハム','鋼鉄','塩田紺']"
            />
+           <maincard
+           title="マフィア珍道中"
+           :img="require('@/imgs/mafia1/main.webp')"
+           linkto="/mafia1"
+           :PLs="['kazuryu','zenon']"
+           />
         </b-row>
       </b-tabs>
     </b-container>

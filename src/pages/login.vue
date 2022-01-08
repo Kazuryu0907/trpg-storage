@@ -4,8 +4,9 @@
         <h1 class="display-1">Login</h1>
     </v-card-title>
     <v-card-text>
-        <v-form>
+        <v-form @submit.prevent="submit">
             <v-text-field prepend-icon="mdi-lock" label="password" v-model="password"/>
+            <b-alert v-if="!isAuth && count != 0" show variant="danger">パスワードが違います!</b-alert>
             <v-card-actions>
                 <v-btn class="warning" @click="submit">Login</v-btn>
             </v-card-actions>
@@ -27,17 +28,27 @@ const encryptSha256 = (str) => {
 export default {
     data() {
         return {
+            count: 0,
             password: "",
         }
     },
     methods: {
         submit(){
             let hashed = encryptSha256(this.password);
-            if(hashed == "23196c9c0be87f9e134d64732d7c291943acfd16d1778d5d0226658387759ef7"){
-                console.log("success!");
-            }else{
-                console.log(hashed);
+            localStorage.setItem('password',hashed);
+            this.$store.commit("changepass",hashed);
+            if(this.$route.query.redirect == undefined){
+                this.$route.query.redirect = "/"
             }
+            console.log(this.$route.query.redirect);
+            this.$router.push(this.$route.query.redirect);
+            this.count++;
+        },
+
+    },
+    computed: {
+        isAuth(){
+            return this.$store.getters.isAuth
         }
     }
 };

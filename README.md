@@ -25,3 +25,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 # MeMo
 - maincardの画像サイズは640*480
+- musicまとめ

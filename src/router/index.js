@@ -10,6 +10,7 @@ import ga1 from '@/pages/trpgs/ga1'
 import numa1 from '@/pages/trpgs/numa1'
 import yoi1 from '@/pages/trpgs/yoi1'
 import void1 from '@/pages/trpgs/void1'
+import mafia1 from '@/pages/trpgs/mafia1'
 
 
 Vue.use(Router)
@@ -27,7 +28,8 @@ export default new Router({
         {
             path: "/login",
             name: "login",
-            component: login
+            component: login,
+            meta: {isPublic: true}
         },
         {
             path: "/inou2",
@@ -53,9 +55,16 @@ export default new Router({
             path: "/void1",
             name: "void1",
             component: void1
+        },
+        {
+            path: "/mafia1",
+            name: "mafia1",
+            component: mafia1
         }
     ],
     scrollBehavior() {
         return {x: 0,y: 0}
     }
+
+    
 })

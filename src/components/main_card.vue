@@ -7,18 +7,16 @@
           <router-link :to="linkto">
             <b-button variant="outline-primary" >詳しく</b-button>
           </router-link>
-          <b-button v-on:click="expandcoll" variant="outline-info" :id="'btn'+collapseid"
+          <b-button v-on:click="expandcoll" variant="outline-info"
             >Member</b-button
           >
         </b-button-group>
         <b-collapse :visible="isexpand" class="mt-2">
-          <!-- <div class="collapse" id="collapseid"> -->
           <b-list-group flush class="text-left">
             <b-list-group-item v-for="(pl, index) in PLs" :key="pl.name"
               ><span>HO{{ index + 1 }}：</span>{{ pl }}</b-list-group-item
             >
           </b-list-group>
-          <!-- </div> -->
         </b-collapse>
       </div>
     </b-card>
@@ -64,8 +62,6 @@ export default {
     },
   },
   data() {
-    var collapseid = "collapseid"+this.linkto.slice(1);
-    console.log(collapseid);
     return {
       isexpand: false
     };
