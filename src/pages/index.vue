@@ -37,20 +37,20 @@
            linkto="/void1"
            :PLs="['朔間 棗','ハム','鋼鉄','塩田紺']"
            />
-           <maincard
-           title="マフィア珍道中"
-           :img="require('@/imgs/mafia1/main.webp')"
-           linkto="/mafia1"
-           :PLs="['kazuryu','zenon']"
-           />
-        </b-row>
-        <b-row>
           <maincard
            title="電子∞感染"
            :img="require('@/imgs/densi1/main.webp')"
            linkto="/densi1"
            :PLs="['ハム','鋼鉄','朔間 棗','zenon']"
           />
+        </b-row>
+        <b-row>
+           <maincard
+           title="マフィア珍道中"
+           :img="require('@/imgs/mafia1/main.webp')"
+           linkto="/mafia1"
+           :PLs="['kazuryu','zenon']"
+           />
           <maincard
            title="マフィア珍道中"
            :img="require('@/imgs/mafia2/main.webp')"
