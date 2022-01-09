@@ -20,31 +20,35 @@ export default {
       PLs: [
         {
           title: "HO1",
-          name: "桑木野　茉莉江(くわきの　まりえ)",
+          name: "桑木野　茉莉江",
+          name_yomi: "くわきの　まりえ",
           pl: "zenon",
           charaId: "4271007",
           islost: false
         },
         {
           title: "HO2",
-          name: "細雨　悠里(ささめ　ゆうり)",
+          name: "細雨　悠里",
+          name_yomi: "ささめ　ゆうり",
           pl: "ハム",
           charaId: "4271251",
           islost: true
         },
         {
           title: "HO3",
-          name: "森田 陽平(もりた ようへい)",
-          pl: "塩田紺",
-          charaId: "4271421",
-          islost: true
-        },
-        {
-          title: "HO4",
-          name: "花車　柊橙(はなぐるま　しゅうと)",
+          name: "花車　柊橙",
+          name_yomi: "はなぐるま　しゅうと",
           pl: "朔間　棗",
           charaId: "4273255",
           islost: false
+        },
+        {
+          title: "HO4",
+          name: "森田 陽平",
+          name_yomi: "もりた ようへい",
+          pl: "塩田紺",
+          charaId: "4271421",
+          islost: true
         },
       ],
     };

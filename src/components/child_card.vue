@@ -31,7 +31,10 @@
           >
           <b-list-group>
             <b-list-group-item>
-              <b-link
+              <b-link v-if="pl.charaId.indexOf('iachara.com') > 0"
+                :href="pl.charaId"
+              >キャラシート</b-link>
+              <b-link v-else
                 :href="'https://charasheet.vampire-blood.net/' + pl.charaId"
                 >キャラシート</b-link
               >

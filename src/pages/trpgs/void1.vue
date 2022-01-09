@@ -1,8 +1,8 @@
 <template>
-  <childpage :title="title" :img="img" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp">
+  <childpage :title="title" :linkto="linkto" :youtube="youtube" :PLs="PLs" :carrouselimg="carrouselimg" :kp="kp">
   <template v-slot:memo>
     <b-list-group>
-      <b-list-group-item>Memoだよ</b-list-group-item>
+      <b-list-group-item><b-icon icon="youtube" font-scale="2" clsas="ml-auto"></b-icon>Memoだよ</b-list-group-item>
     </b-list-group>
   </template>
   </childpage>
@@ -46,7 +46,7 @@ export default {
           name: "鳳仙花　琥白",
           name_yomi: "ほうせんか　こはく(22)",
           pl: "朔間 棗",
-          charaId: "-",
+          charaId: "4293582",
           islost: false
         },
         {

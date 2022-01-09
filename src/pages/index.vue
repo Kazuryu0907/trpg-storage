@@ -44,6 +44,14 @@
            :PLs="['kazuryu','zenon']"
            />
         </b-row>
+        <b-row>
+          <maincard
+           title="電子∞感染"
+           :img="require('@/imgs/densi1/main.webp')"
+           linkto="/densi1"
+           :PLs="['ハム','鋼鉄','朔間 棗','zenon']"
+          />
+        </b-row>
       </b-tabs>
     </b-container>
   </div>
