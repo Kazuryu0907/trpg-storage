@@ -12,6 +12,7 @@ import numa1 from '@/pages/trpgs/numa1'
 import yoi1 from '@/pages/trpgs/yoi1'
 import void1 from '@/pages/trpgs/void1'
 import mafia1 from '@/pages/trpgs/mafia1'
+import mafia2 from '@/pages/trpgs/mafia2'
 import densi1 from '@/pages/trpgs/densi1'
 
 Vue.use(Router)
@@ -71,6 +72,11 @@ export default new Router({
             path: "/densi1",
             name: "densi1",
             component: densi1
+        },
+        {
+            path: "/mafia2",
+            name: "mafia2",
+            component: mafia2
         }
     ],
     scrollBehavior() {

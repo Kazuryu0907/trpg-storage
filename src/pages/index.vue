@@ -51,6 +51,13 @@
            linkto="/densi1"
            :PLs="['ハム','鋼鉄','朔間 棗','zenon']"
           />
+          <maincard
+           title="マフィア珍道中"
+           :img="require('@/imgs/mafia2/main.webp')"
+           linkto="/mafia2"
+           number=2
+           :PLs="['ハム','朔間 棗']"
+          />
         </b-row>
       </b-tabs>
     </b-container>
