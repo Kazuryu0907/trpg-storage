@@ -15,6 +15,7 @@ export default {
         }
       ],
       title: "マフィア珍道中",
+      youtube: "https://www.youtube.com/embed/ASAgSn5oQKg",
       img: "require('@/imgs/mafia1/main.webp')",
       linkto: "/mafia1",
       kp: "鋼鉄",
