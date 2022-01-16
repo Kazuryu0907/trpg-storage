@@ -1,5 +1,13 @@
 <template>
   <div>
+    <b-button v-b-modal.concealment-modal>Modal</b-button>
+    <b-modal id="concealment-modal" size="lg" centered hide-footer title="注意！">
+      <div class="d-block text-center">
+        <h4>この先秘匿に触れる可能性があります<br>進みますか？</h4>
+      </div>
+      <b-button class="mt-3 ml-3" variant="warning" @click="this.$bvModal.hide('concealment-modal')">進む</b-button>
+      <b-button class="mt-3 ml-3" variant="primary" @click="gohome">戻る</b-button>
+    </b-modal>
     <div class="home">
       <Carrousel :items="carrouselimg" />
     </div>
@@ -74,6 +82,14 @@
 <script>
 import Carrousel from "@/components/Carrousel.vue";
 export default {
+  mounted(){
+    this.$bvModal.show('concealment-modal')
+  },
+  methods: {
+    gohome(){
+      this.$router.push("/");
+    }
+  },
   name: "childpage",
   props: {
     title: {

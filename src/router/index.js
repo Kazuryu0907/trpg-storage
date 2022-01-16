@@ -14,6 +14,7 @@ import void1 from '@/pages/trpgs/void1'
 import mafia1 from '@/pages/trpgs/mafia1'
 import mafia2 from '@/pages/trpgs/mafia2'
 import densi1 from '@/pages/trpgs/densi1'
+import k from '@/pages/k'
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -26,6 +27,11 @@ export default new Router({
             path: '/',
             name: 'index',
             component: index
+        },
+        {
+            path: "/k",
+            name: "k",
+            component: k
         },
         {
             path: "/login",
