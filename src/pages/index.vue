@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-container fluid="md">
-      <h1 class="mb-10 mt-11"><strong>TRPG保管庫</strong></h1>
+      <h1 class="mb-10 mt-7"><strong>TRPG保管庫</strong></h1>
       <b-tabs align="center" pills>
         <b-row>
           <maincard

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <b-button v-b-modal.concealment-modal>Modal</b-button>
-    <b-modal id="concealment-modal" size="lg" centered hide-footer title="注意！">
+    <b-modal v-if="isconcealment" id="concealment-modal" size="lg" centered hide-footer title="注意！">
       <div class="d-block text-center">
         <h4>この先秘匿に触れる可能性があります<br>進みますか？</h4>
       </div>
-      <b-button class="mt-3 ml-3" variant="warning" @click="this.$bvModal.hide('concealment-modal')">進む</b-button>
+      <b-button class="mt-3 ml-3" variant="warning" @click="hidemodal">進む</b-button>
       <b-button class="mt-3 ml-3" variant="primary" @click="gohome">戻る</b-button>
     </b-modal>
     <div class="home">
@@ -27,7 +26,7 @@
         >
           <template #header>
             <h4>{{ pl.name }}</h4>
-            <h5>{{ pl.name_yomi }}</h5>
+            <h5 style="color: gray;">{{ pl.name_yomi }}</h5>
           </template>
           <b-card-sub-title
             >HO{{ index + 1 }}<br />
@@ -78,6 +77,8 @@
   text-underline-offset: 2px;
   text-decoration-thickness: 10px;
 }
+
+
 </style>
 <script>
 import Carrousel from "@/components/Carrousel.vue";
@@ -88,6 +89,9 @@ export default {
   methods: {
     gohome(){
       this.$router.push("/");
+    },
+    hidemodal(){
+      this.$bvModal.hide('concealment-modal');
     }
   },
   name: "childpage",
@@ -132,6 +136,11 @@ export default {
       default: "",
       require: false,
     },
+    isconcealment: {
+      type: Boolean,
+      default: true,
+      require: false
+    }
   },
   components: {
     Carrousel,

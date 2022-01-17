@@ -6,6 +6,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import index from '@/pages/index'
 import login from '@/pages/login'
 import NF404 from '@/pages/404'
+import inputform from '@/pages/inputform'
+
 import inou2 from '@/pages/trpgs/inou2'
 import ga1 from '@/pages/trpgs/ga1'
 import numa1 from '@/pages/trpgs/numa1'
@@ -43,6 +45,11 @@ export default new Router({
             name: "NF404",
             path: "*",
             component: NF404
+        },
+        {
+            name: "inputform",
+            path: "/if",
+            component: inputform
         },
         {
             path: "/inou2",
