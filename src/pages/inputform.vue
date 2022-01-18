@@ -6,19 +6,34 @@
         <b-form-input
           v-model="data.title"
           placeholder="例）異能警察"
-          id="title"
+          :state="Boolean(data.title)"
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group label="識別id">
+        <b-form-input
+          v-model="data.id"
+          placeholder="例）inou1(英字+数字)"
+          :state="Boolean(data.id)"
         ></b-form-input>
       </b-form-group>
       <b-form-group label="第n陣">
         <b-form-input
           v-model="data.number"
           placeholder="例）1"
-          id="number"
           type="number"
+          :state="Boolean(data.number)"
         ></b-form-input>
       </b-form-group>
       <b-form-group label="KP">
-        <b-form-input v-model="data.kp" placeholder="例）鋼鉄"> </b-form-input>
+        <b-form-input
+          v-model="data.kp"
+          placeholder="例）鋼鉄"
+          :state="Boolean(data.kp)"
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group label="メイン画像(640px*480px)">
+        <b-form-file v-model="data.main_img" :state="Boolean(data.main_img)" @change="up($event)" aria-describedby="main_img_feedback"></b-form-file>
+        <b-form-invalid-feedback id="main_img_feedback">640px*480pxにしてください</b-form-invalid-feedback>
       </b-form-group>
       <label for="pls">PLたち</label>
       <div v-for="(pl,index) in data.pls" :key="index" :class="[index != 0 ? 'mt-2' : '']">
@@ -27,6 +42,7 @@
             class="mt-2"
             :placeholder="'HO' + (index + 1)"
             v-model="data.pls[index].plname"
+            :state="Boolean(data.pls[index].plname)"
           ></b-form-input>
           <b-button
             v-b-toggle="'plcol' + index"
@@ -51,11 +67,11 @@
         <b-collapse :id="'plcol' + index" class="text-center ml-auto mt-3">
           <b-row>
             <b-col sm="2"><p>PC名</p></b-col>
-            <b-col><b-form-input placeholder="例）権 秀治" v-model="data.pls[index].pcname"></b-form-input></b-col>
+            <b-col><b-form-input placeholder="例）権 秀治" v-model="data.pls[index].pcname" :state="Boolean(data.pls[index].pcname)"></b-form-input></b-col>
           </b-row>
           <b-row>
             <b-col sm="2"><p>ふりがな</p></b-col>
-            <b-col><b-form-input placeholder="例）くぉん ひでじ(24)" v-model="data.pls[index].name_yomi"></b-form-input></b-col>
+            <b-col><b-form-input placeholder="例）くぉん ひでじ(24)" v-model="data.pls[index].name_yomi" :state="Boolean(data.pls[index].name_yomi)"></b-form-input></b-col>
           </b-row>
           <b-row>
             <b-col sm="2"><p class="mt-1">キャラシートURL</p></b-col>
@@ -70,12 +86,13 @@
           </b-row>
           <b-row>
             <b-col sm="2"><p class="mt-1">キャラ画像</p></b-col>
-            <b-col><b-form-file v-model="file1" :state="Boolean(file1)" @change="up"></b-form-file></b-col>
+            <b-col><b-form-file placeholder="任意サイズ・でもキャラ同士揃えて" v-model="file1" :state="Boolean(file1)" @change="up_child($event,index)"></b-form-file></b-col>
           </b-row>
         </b-collapse>
       </div>
-    <b-button @click="log"></b-button>
     </div>
+    <hr class="mt-7">
+    <b-button class="my-5" @click="log">Submit</b-button>
   </div>
 </template>
 
@@ -86,14 +103,17 @@ export default {
       data: {
         image: null,
         title: "",
+        id: "",
         number: "",
         kp: "",
+        main_img: null,
+        main_img_meta: null,
         pls: [{
           plname: "",
           pcname: "",
           name_yomi: "",
           url: "",
-          islost: false,
+          islost: "lost",
           img: null
       }],
       },
@@ -107,7 +127,7 @@ export default {
           pcname: "",
           name_yomi: "",
           url: "",
-          islost: false,
+          islost: "lost",
           img: null
       });
     },
@@ -117,21 +137,28 @@ export default {
     pls_sub() {
       this.data.pls.pop();
     },
-    up() {
-      this.createimage(this.file1);
-      console.log(this.file1);
+    up(e) {
+      const file = (e.target.files || e.dataTransfer)[0]
+      if(file.type.startsWith("image/")){
+        const render = new FileReader();
+        render.readAsDataURL(file);
+        render.onload = () => {
+          const dataURI =  render.result;
+          this.data.main_img = dataURI;
+        }
+      }
     },
-    uploaded(e) {
-      const img = e.target.files[0];
-      this.createimage(img);
-      console.log(this.data.image);
-    },
-    createimage(img) {
-      const reader = new FileReader();
-      reader.readAsDataURL(img);
-      reader.onload = () => {
-        this.data.image = reader.result;
-      };
+    up_child(e,index) {
+      console.log(index);
+      const file = (e.target.files || e.dataTransfer)[0]
+      if(file.type.startsWith("image/")){
+        const render = new FileReader();
+        render.readAsDataURL(file);
+        render.onload = () => {
+          const dataURI =  render.result;
+          this.data.pls[index].img = dataURI;
+        }
+      }
     },
   },
 };
