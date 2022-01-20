@@ -27,3 +27,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - maincardの画像サイズは640*480
 - musicまとめ
 - HOとPLの区別
+- queryで拾ってきた時のimgの判定

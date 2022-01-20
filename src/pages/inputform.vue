@@ -34,7 +34,7 @@
       <b-form-group label="メイン画像(640px*480px) .webp">
         <b-form-file
           accept=".webp"
-          :state="Boolean(data.main_img)"
+          :state="Boolean(data.main_img) || Boolean(data.main_img_url)"
           @change="main_img_change($event)"
           aria-describedby="main_img_feedback"
         ></b-form-file>
@@ -129,7 +129,7 @@
               ><b-form-file
                 accept=".webp"
                 placeholder="任意サイズ・でもキャラ同士揃えて"
-                :state="Boolean(data.pls[index].img)"
+                :state="Boolean(data.pls[index].img) || Boolean(data.pls[index].img_url)"
                 @change="child_img_change($event, index)"
               ></b-form-file
             ></b-col>
@@ -175,16 +175,39 @@ let pls = {
   islost: "lost",
   img: null,
   img_url: null,
+  url: "", //キャラシ
 };
 
 export default {
   created() {
     this.db = getFirestore(firebase);
     this.storage = getStorage(firebase);
+    this.query_id = this.$route.query.id;
+    if(this.query_id){
+      getDoc(doc(this.db,"main",this.query_id)).then((doc) => {
+        const data = doc.data();
+        const {PLs,img,...arr} = data;
+        PLs;
+        for(let key in arr){
+          this.data[key] = data[key];
+        }
+        //keyが違うため
+        this.data["main_img_url"] = img;
+      })
+      getDoc(doc(this.db,"child",this.query_id)).then((doc) => {
+        const data = doc.data();
+        console.log(data)
+        const pls = data.PLs;
+        const youtube = data.youtube;
+        this.data.pls = [...pls];
+        this.data.youtube = youtube;
+      })
+    }
   },
   data() {
     return {
       db: null,
+      query_id: null,
       storage: null,
       errormodal_msg: "",
       data: {
