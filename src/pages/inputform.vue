@@ -42,13 +42,24 @@
           >640px*480pxにしてください</b-form-invalid-feedback
         >
       </b-form-group>
+      <b-img
+        :src="!data.main_img_src ? data.main_img_url : data.main_img_src"
+        width="320"
+        height="auto"
+      ></b-img>
       <b-form-group label="Youtubeアーカイブ">
         <b-form-input
           v-model="data.youtube"
           placeholder="アーカイブのプレイリストの埋め込みurl"
-          :state="Boolean(data.youtube)"
         ></b-form-input>
       </b-form-group>
+        <b-form-group label="上に表示させる画像たち(サイズ自由&複数選択可) .webp" class="mt-8">
+          <b-form-file
+            accept=".webp"
+            multiple
+            @change="carrousel_img_change($event)"
+          ></b-form-file>
+        </b-form-group>
       <label for="pls">PLたち</label>
       <div
         v-for="(pl, index) in data.pls"
@@ -129,10 +140,22 @@
               ><b-form-file
                 accept=".webp"
                 placeholder="任意サイズ・でもキャラ同士揃えて"
-                :state="Boolean(data.pls[index].img) || Boolean(data.pls[index].img_url)"
+                :state="
+                  Boolean(data.pls[index].img) ||
+                  Boolean(data.pls[index].img_url)
+                "
                 @change="child_img_change($event, index)"
               ></b-form-file
             ></b-col>
+            <b-img
+              :src="
+                !data.pls[index].img_src
+                  ? data.pls[index].img_url
+                  : data.pls[index].img_src
+              "
+              width="100"
+              height="auto"
+            ></b-img>
           </b-row>
         </b-collapse>
       </div>
@@ -146,7 +169,9 @@
       <div class="d-block text-center">
         <p>アップロード完了！</p>
       </div>
-      <b-button class="mt-3 ml-3" variant="primary" @click="$router.push('/')">homeへ</b-button>
+      <b-button class="mt-3 ml-3" variant="primary" @click="$router.push('/')"
+        >homeへ</b-button
+      >
     </b-modal>
   </div>
 </template>
@@ -168,56 +193,77 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-let pls = {
+const pls = {
   plname: "",
   pcname: "",
   name_yomi: "",
   islost: "lost",
   img: null,
   img_url: null,
+  img_src: null,
   url: "", //キャラシ
 };
 
+const isNewdata = (newData, oldData) => {
+  const { pls: newPLs, ...newMain } = newData;
+  const { pls: oldPLs, ...oldMain } = oldData;
+  for (let key of Object.keys(newMain)) {
+    if (newMain[key] != oldMain[key]) {
+      return 1;
+    }
+    newPLs;
+    oldPLs;
+  }
+  if (newPLs.lenght != oldPLs.lenght) {
+    console.log("diff lenght");
+    return 1;
+  }
+};
 export default {
   created() {
     this.db = getFirestore(firebase);
     this.storage = getStorage(firebase);
     this.query_id = this.$route.query.id;
-    if(this.query_id){
-      getDoc(doc(this.db,"main",this.query_id)).then((doc) => {
-        const data = doc.data();
-        const {PLs,img,...arr} = data;
+    if (this.query_id) {
+      getDoc(doc(this.db, "main", this.query_id)).then((docu) => {
+        const data = docu.data();
+        const { PLs, img, ...arr } = data;
         PLs;
-        for(let key in arr){
+        for (let key of Object.keys(arr)) {
           this.data[key] = data[key];
         }
         //keyが違うため
         this.data["main_img_url"] = img;
-      })
-      getDoc(doc(this.db,"child",this.query_id)).then((doc) => {
-        const data = doc.data();
-        console.log(data)
-        const pls = data.PLs;
-        const youtube = data.youtube;
-        this.data.pls = [...pls];
-        this.data.youtube = youtube;
-      })
+
+        getDoc(doc(this.db, "child", this.query_id)).then((docu) => {
+          const data = docu.data();
+          const pls = data.PLs;
+          const youtube = data.youtube;
+          this.data.pls = [...pls];
+          this.data.youtube = youtube;
+          this.originalData = { ...this.data };
+        });
+      });
     }
   },
   data() {
     return {
       db: null,
       query_id: null,
+      originalData: {},
       storage: null,
       errormodal_msg: "",
       data: {
         title: "",
-        id: "test1",
+        id: "",
         number: "",
         kp: "",
         youtube: "",
         main_img: null,
         main_img_url: "",
+        main_img_src: null,
+        carrouselimg: [],
+        carrouselimg_url: [],
         pls: [{ ...pls }],
       },
     };
@@ -235,29 +281,23 @@ export default {
     main_img_change(e) {
       const file = e.target.files[0];
       this.data.main_img = file;
+      this.data.main_img_src = URL.createObjectURL(file);
     },
     child_img_change(e, index) {
       const file = e.target.files[0];
       this.data.pls[index].img = file;
+      this.data.pls[index].img_src = URL.createObjectURL(file);
+    },
+    carrousel_img_change(e) {
+      this.data.carrouselimg = [];
+      for (let file of e.target.files) {
+        this.data.carrouselimg.push(file);
+      }
     },
     test() {
       getDocs(collection(this.db, "posts")).then((snap) => {
         snap.forEach((doc) => {
           console.log(doc.id, "=>", doc.data());
-        });
-      });
-    },
-    uploaddata(path, file, callback, DEBUG = false) {
-      const Ref = ref(this.storage, path);
-      if (DEBUG) {
-        return;
-      }
-      const uploadTask = uploadBytesResumable(Ref, file, {
-        contentType: "image/webp",
-      });
-      uploadTask.on("state_changed", () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          callback(url);
         });
       });
     },
@@ -269,10 +309,14 @@ export default {
     createTask(Ref, file, callback) {
       return new Promise((resolve) => {
         const meta = { contentType: "image/webp" };
+        if (!file) {
+          return resolve();
+        }
+        console.log("file", file);
         uploadBytesResumable(Ref, file, meta).then((snap) => {
           getDownloadURL(snap.ref).then((url) => {
             callback(url);
-            resolve();
+            return resolve();
           });
         });
       });
@@ -282,80 +326,118 @@ export default {
       this.$bvModal.show("errormodal");
     },
     isfieldfull(data) {
-      const { id, title, number, kp, main_img, pls } = data;
-      if (!(id && title && number && kp && main_img)) {
+      const { id, title, number, kp, main_img, main_img_url, pls } = data;
+      if (!(id && title && number && kp && (main_img || main_img_url))) {
         this.showerror("メイン関係が埋まってない！");
         return null;
       }
       for (let pl of pls) {
-        if (!(pl.plname && pl.pcname && pl.name_yomi && pl.islost && pl.img)) {
+        if (
+          !(
+            pl.plname &&
+            pl.pcname &&
+            pl.name_yomi &&
+            pl.islost &&
+            (pl.img || pl.img_url)
+          )
+        ) {
           this.showerror("PL関係が埋まってない！");
           return null;
         }
       }
       return 1;
     },
-    submit() {
-
+    async submit() {
       const { id, title, number, youtube, kp, main_img, pls } = this.data;
       const DEBUG = false;
-      //フィールドが埋まっているか
-      const isfull = this.isfieldfull(this.data);
-      if(isfull == null){return;}
-      // const isexest = await this.isexistsid(id);
+
+      const isexest = await this.isexistsid(id);
       //idが被っていないか
-      // if(isexest){this.showerror("idが既に存在する！");return;} 
+      if (isexest && !this.query_id) {
+        this.showerror("idが被ってます！");
+        return;
+      }
+      //フィールドが埋まっているか
+      if (!this.isfieldfull(this.data)) {
+        return;
+      }
 
       let path = `main/${id}/main.webp`;
       const task = this.createTask(ref(this.storage, path), main_img, (url) => {
         this.data.main_img_url = url;
       });
-      task.then(() => {
-        const storedata_main = {
-          title: title,
-          img: this.data.main_img_url,
-          kp: kp,
-          number: number,
-          id: id,
-          PLs: pls.map((pl) => pl.plname),
-        };
-        DEBUG ? "" : setDoc(doc(this.db, "main", id), storedata_main);
+      isNewdata(this.data, this.originalData);
+      DEBUG
+        ? ""
+        : task
+            .then(() => {
+              const storedata_main = {
+                title: title,
+                img: this.data.main_img_url,
+                kp: kp,
+                number: number,
+                id: id,
+                PLs: pls.map((pl) => pl.plname),
+              };
+              setDoc(doc(this.db, "main", id), storedata_main);
 
-        // child_img
-        let PromiseArray = [];
-        this.data.pls.forEach((pl, index) => {
-          let path = `child/${id}/${index + 1}.webp`;
-          let callback = (url) => {
-            this.data.pls[index].img_url = url;
-          };
-          PromiseArray.push({
-            ref: ref(this.storage, path),
-            file: pl.img,
-            func: callback,
-          });
-        });
-        Promise.all(
-          PromiseArray.map((pa) => this.createTask(pa.ref, pa.file, pa.func))
-        ).then(() => {
-          console.log(this.data.pls.map((pl) => pl.img_url));
-          const storedata = {
-            title: title,
-            number: number,
-            id: id,
-            youtube: youtube,
-            kp: kp,
-            PLs: this.data.pls.map((pl) => {
-              const { img, ...senddata } = pl;
-              img;
-              return senddata;
-            }),
-          };
-          DEBUG ? "" : setDoc(doc(this.db, "child", id), storedata);
-        });
-        this.$bvModal.show("successmodal");
-      }).catch((err) => {this.showerror(err);return});
-
-      // this.$router.push("/");
+              // child_img
+              let PromiseArray = [];
+              this.data.pls.forEach((pl, index) => {
+                let path = `child/${id}/${index + 1}.webp`;
+                let callback = (url) => {
+                  this.data.pls[index].img_url = url;
+                };
+                PromiseArray.push({
+                  ref: ref(this.storage, path),
+                  file: pl.img,
+                  func: callback,
+                });
+              });
+              Promise.all(
+                PromiseArray.map((pa) =>
+                  this.createTask(pa.ref, pa.file, pa.func)
+                )
+              ).then(() => {
+                let carrouselArray = [];
+                this.data.carrouselimg.forEach((file, index) => {
+                  let path = `carrousel/${id}/${index + 1}.webp`;
+                  let callback = (url) => {
+                    this.data.carrouselimg_url[index] = url;
+                  };
+                  carrouselArray.push({
+                    ref: ref(this.storage, path),
+                    file: file,
+                    func: callback,
+                  });
+                });
+                Promise.all(
+                  carrouselArray
+                    .map((pa) => this.createTask(pa.ref, pa.file, pa.func)))
+                    .then(() => {
+                      const storedata = {
+                        title: title,
+                        number: number,
+                        id: id,
+                        youtube: youtube,
+                        kp: kp,
+                        carrouselimg: this.data.carrouselimg_url,
+                        PLs: this.data.pls.map((pl) => {
+                          const { img, ...senddata } = pl;
+                          img;
+                          return senddata;
+                        }),
+                      };
+                      setDoc(doc(this.db, "child", id), storedata);
+                    })
+                
+              });
+              this.$bvModal.show("successmodal");
+            })
+            .catch((err) => {
+              this.showerror(err);
+              return;
+            });
     },
   },
 };
@@ -365,6 +447,7 @@ export default {
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 div {
   font-family: "Noto Sans Japanese", sans-serif;
+  font-display: swap;
 }
 
 .sample {

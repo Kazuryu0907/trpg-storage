@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import index from '@/pages/index'
 import login from '@/pages/login'
 import NF404 from '@/pages/404'
 import inputform from '@/pages/inputform'
+import page from '@/pages/page'
+import view from '@/pages/view'
 
 import inou2 from '@/pages/trpgs/inou2'
 import ga1 from '@/pages/trpgs/ga1'
@@ -28,7 +29,12 @@ export default new Router({
         {
             path: '/',
             name: 'index',
-            component: index
+            component: page
+        },
+        {
+            path: "/view",
+            name: "view",
+            component: view
         },
         {
             path: "/k",

@@ -3,7 +3,7 @@
         <v-carousel-item
          v-for="(item,i) in items"
          :key="i"
-         :src="item.src">
+         :src="item">
         </v-carousel-item>
     </v-carousel>
 </template>
