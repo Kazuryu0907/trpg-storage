@@ -423,7 +423,7 @@ export default {
                         kp: kp,
                         carrouselimg: this.data.carrouselimg_url,
                         PLs: this.data.pls.map((pl) => {
-                          const { img, ...senddata } = pl;
+                          const { img, img_src,...senddata} = pl;img_src;
                           img;
                           return senddata;
                         }),
