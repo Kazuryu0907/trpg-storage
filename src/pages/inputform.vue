@@ -444,7 +444,7 @@ export default {
 </script>
 
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 div {
   font-family: "Noto Sans Japanese", sans-serif;
   font-display: swap;
