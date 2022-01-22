@@ -1,9 +1,10 @@
 <template>
-    <v-carousel height="800px" cycle interval=5000>
+    <v-carousel height="auto" cycle interval=5000>
         <v-carousel-item
          v-for="(item,i) in items"
          :key="i"
-         :src="item">
+         >
+         <img :src="item" style="width:auto;height:auto;"/>
         </v-carousel-item>
     </v-carousel>
 </template>

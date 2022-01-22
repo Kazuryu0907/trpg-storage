@@ -177,8 +177,6 @@
 import firebase from "../firebase";
 import {
   getFirestore,
-  collection,
-  getDocs,
   doc,
   setDoc,
   getDoc,
@@ -238,6 +236,7 @@ export default {
           const youtube = data.youtube;
           this.data.pls = [...pls];
           this.data.youtube = youtube;
+          this.data.carrouselimg_url = [...data.carrouselimg]
           this.originalData = { ...this.data };
         });
       });
@@ -291,13 +290,6 @@ export default {
         this.data.carrouselimg.push(file);
       }
     },
-    test() {
-      getDocs(collection(this.db, "posts")).then((snap) => {
-        snap.forEach((doc) => {
-          console.log(doc.id, "=>", doc.data());
-        });
-      });
-    },
     async isexistsid(id) {
       const itemRef = doc(this.db, "main", id);
       const snap = await getDoc(itemRef);
@@ -309,7 +301,6 @@ export default {
         if (!file) {
           return resolve();
         }
-        console.log("file", file);
         uploadBytesResumable(Ref, file, meta).then((snap) => {
           getDownloadURL(snap.ref).then((url) => {
             callback(url);
@@ -358,10 +349,9 @@ export default {
       if (!this.isfieldfull(this.data)) {
         return;
       }
-      const extension = main_img.name.split(".").slice(-1)[0];
-      console.log("extension",extension)
+      const extension = main_img ? main_img.name.split(".").slice(-1)[0] : "webp";
       let path = `main/${id}/main.${extension}`;
-      const task = this.createTask(ref(this.storage, path), main_img, (url) => {
+      const task = this.createTask(ref(this.storage, path), main_img, (url) => { //nullならなんもしない
         this.data.main_img_url = url;
       });
       isNewdata(this.data, this.originalData);
@@ -382,7 +372,7 @@ export default {
               // child_img
               let PromiseArray = [];
               this.data.pls.forEach((pl, index) => {
-                let extension = pl.img.name.split(".").slice(-1)[0];
+                let extension = pl.img ? pl.img.name.split(".").slice(-1)[0] : "webp";
                 let path = `child/${id}/${index + 1}.${extension}`;
                 let callback = (url) => {
                   this.data.pls[index].img_url = url;
@@ -400,7 +390,7 @@ export default {
               ).then(() => {
                 let carrouselArray = [];
                 this.data.carrouselimg.forEach((file, index) => {
-                  let extension = file.name.split(".").slice(-1)[0];
+                  let extension = file ? file.name.split(".").slice(-1)[0] : "webp";
                   let path = `carrousel/${id}/${index + 1}.${extension}`;
                   let callback = (url) => {
                     this.data.carrouselimg_url[index] = url;
