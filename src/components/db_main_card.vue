@@ -1,7 +1,7 @@
 <template>
   <b-col md="4">
     <b-card :img-src="img" img-alt="Image" img-top class="mb-2">
-      <b-card-title><span class="text-nowrap" style="border-bottom: solid 3px #87CEFA;">{{title}}</span></b-card-title>
+      <b-card-title><span class="text-break" style="border-bottom: solid 3px #87CEFA;">{{title}}</span></b-card-title>
       <b-card-text> 第{{ number }}陣 </b-card-text>
       <div class="mx-auto">
         <b-button-group>
@@ -41,8 +41,8 @@ export default {
       require: true,
     },
     number: {
-      type: Number,
-      default: 1,
+      type: String,
+      default: "1",
       require: false,
     },
     id: {

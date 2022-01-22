@@ -31,9 +31,8 @@
           :state="Boolean(data.kp)"
         ></b-form-input>
       </b-form-group>
-      <b-form-group label="メイン画像(640px*480px) .webp">
+      <b-form-group label="メイン画像(640px*480px)">
         <b-form-file
-          accept=".webp"
           :state="Boolean(data.main_img) || Boolean(data.main_img_url)"
           @change="main_img_change($event)"
           aria-describedby="main_img_feedback"
@@ -47,15 +46,14 @@
         width="320"
         height="auto"
       ></b-img>
-      <b-form-group label="Youtubeアーカイブ">
+      <b-form-group label="Youtubeアーカイブ（埋め込み）">
         <b-form-input
           v-model="data.youtube"
           placeholder="アーカイブのプレイリストの埋め込みurl"
         ></b-form-input>
       </b-form-group>
-        <b-form-group label="上に表示させる画像たち(サイズ自由&複数選択可) .webp" class="mt-8">
+        <b-form-group label="上に表示させる画像たち(サイズ自由&複数選択可)" class="mt-8">
           <b-form-file
-            accept=".webp"
             multiple
             @change="carrousel_img_change($event)"
           ></b-form-file>
@@ -138,7 +136,6 @@
             <b-col sm="2"><p class="mt-1">キャラ画像</p></b-col>
             <b-col
               ><b-form-file
-                accept=".webp"
                 placeholder="任意サイズ・でもキャラ同士揃えて"
                 :state="
                   Boolean(data.pls[index].img) ||
@@ -361,8 +358,9 @@ export default {
       if (!this.isfieldfull(this.data)) {
         return;
       }
-
-      let path = `main/${id}/main.webp`;
+      const extension = main_img.name.split(".").slice(-1)[0];
+      console.log("extension",extension)
+      let path = `main/${id}/main.${extension}`;
       const task = this.createTask(ref(this.storage, path), main_img, (url) => {
         this.data.main_img_url = url;
       });
@@ -384,7 +382,8 @@ export default {
               // child_img
               let PromiseArray = [];
               this.data.pls.forEach((pl, index) => {
-                let path = `child/${id}/${index + 1}.webp`;
+                let extension = pl.img.name.split(".").slice(-1)[0];
+                let path = `child/${id}/${index + 1}.${extension}`;
                 let callback = (url) => {
                   this.data.pls[index].img_url = url;
                 };
@@ -401,7 +400,8 @@ export default {
               ).then(() => {
                 let carrouselArray = [];
                 this.data.carrouselimg.forEach((file, index) => {
-                  let path = `carrousel/${id}/${index + 1}.webp`;
+                  let extension = file.name.split(".").slice(-1)[0];
+                  let path = `carrousel/${id}/${index + 1}.${extension}`;
                   let callback = (url) => {
                     this.data.carrouselimg_url[index] = url;
                   };

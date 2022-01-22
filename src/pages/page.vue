@@ -32,7 +32,6 @@ export default {
     docs.forEach((doc) => {
       this.datas.push(doc.data());
     });
-    console.log(this.datas);
   },
   data() {
     return {

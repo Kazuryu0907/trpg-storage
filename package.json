@@ -13,6 +13,7 @@
     "bootstrap-vue": "^2.21.2",
     "browser-image-compression": "^1.0.17",
     "core-js": "^3.6.5",
+    "express": "^4.17.2",
     "firebase": "^9.6.3",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
