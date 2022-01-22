@@ -5,6 +5,12 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
      ? '/bv/'
      : '/',
+  pages: {
+    index: {
+      entry: "src/main.js",
+      title: "TRPG保管庫"
+    }
+  },
   chainWebpack: config => {
     config.module
       .rule('vue')
