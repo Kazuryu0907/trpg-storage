@@ -46,18 +46,40 @@
         width="320"
         height="auto"
       ></b-img>
-      <b-form-group label="Youtubeアーカイブ（埋め込み）">
+      <b-form-group
+        label="上に表示させる画像たち(サイズ自由&複数選択可)"
+      >
+        <b-form-file
+          multiple
+          @change="carrousel_img_change($event)"
+        ></b-form-file>
+      </b-form-group>
+      <b-form-group label="Youtubeアーカイブ（埋め込み）" class="mt-3">
         <b-form-input
           v-model="data.youtube"
           placeholder="アーカイブのプレイリストの埋め込みurl"
         ></b-form-input>
       </b-form-group>
-        <b-form-group label="上に表示させる画像たち(サイズ自由&複数選択可)" class="mt-8">
-          <b-form-file
-            multiple
-            @change="carrousel_img_change($event)"
-          ></b-form-file>
-        </b-form-group>
+      <b-form-group label="使用楽曲">
+        <b-form inline v-for="(msc,index) in data.musics" :key="msc.title" :class="[index != 0 ? 'mt-2' : '']">
+          <b-form-input v-model="data.musics[index].title" placeholder="タイトル"></b-form-input>
+          <b-form-input v-model="data.musics[index].url" placeholder="YoutubeのURL" class="ml-3"></b-form-input>
+          <b-button
+            variant="outline-dark"
+            class="ml-10"
+            @click="msc_pls"
+            v-if="index == data.musics.length-1"
+            ><b-icon-plus></b-icon-plus
+          ></b-button>
+          <b-button
+            v-if="index == data.musics.length - 1 && index != 0"
+            variant="outline-dark"
+            class="ml-3"
+            @click="msc_sub"
+            ><b-icon-dash></b-icon-dash
+          ></b-button>
+        </b-form>
+      </b-form-group>
       <label for="pls">PLたち</label>
       <div
         v-for="(pl, index) in data.pls"
@@ -166,8 +188,8 @@
       <div class="d-block text-center">
         <p>アップロード完了！</p>
       </div>
-      <b-button class="mt-3 ml-3" variant="primary" @click="$router.push('/')"
-        >homeへ</b-button
+      <b-button class="mt-3 ml-3" variant="primary" @click="$router.push(`/view?id=${data.id}`)"
+        >ページへ</b-button
       >
     </b-modal>
   </div>
@@ -175,12 +197,7 @@
 
 <script>
 import firebase from "../firebase";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import {
   getStorage,
   ref,
@@ -199,6 +216,10 @@ const pls = {
   url: "", //キャラシ
 };
 
+const musics = {
+  title: "",
+  url: "",
+};
 const isNewdata = (newData, oldData) => {
   const { pls: newPLs, ...newMain } = newData;
   const { pls: oldPLs, ...oldMain } = oldData;
@@ -234,9 +255,11 @@ export default {
           const data = docu.data();
           const pls = data.PLs;
           const youtube = data.youtube;
+          const musics = data.musics;
           this.data.pls = [...pls];
           this.data.youtube = youtube;
-          this.data.carrouselimg_url = [...data.carrouselimg]
+          this.data.carrouselimg_url = [...data.carrouselimg];
+          this.data.musics = [...musics];
           this.originalData = { ...this.data };
         });
       });
@@ -260,20 +283,16 @@ export default {
         main_img_src: null,
         carrouselimg: [],
         carrouselimg_url: [],
+        musics:[{...musics}],
         pls: [{ ...pls }],
       },
     };
   },
   methods: {
-    pls_pls() {
-      this.data.pls.push({ ...pls });
-    },
-    log() {
-      console.log(this.data);
-    },
-    pls_sub() {
-      this.data.pls.pop();
-    },
+    pls_pls(){this.data.pls.push({ ...pls });},
+    pls_sub(){this.data.pls.pop();},
+    msc_pls(){this.data.musics.push({...musics});},
+    msc_sub(){this.data.musics.pop();},
     main_img_change(e) {
       const file = e.target.files[0];
       this.data.main_img = file;
@@ -336,7 +355,7 @@ export default {
       return 1;
     },
     async submit() {
-      const { id, title, number, youtube, kp, main_img, pls } = this.data;
+      const { id, title, number, youtube, kp, main_img, pls, musics} = this.data;
       const DEBUG = false;
 
       const isexest = await this.isexistsid(id);
@@ -349,9 +368,12 @@ export default {
       if (!this.isfieldfull(this.data)) {
         return;
       }
-      const extension = main_img ? main_img.name.split(".").slice(-1)[0] : "webp";
+      const extension = main_img
+        ? main_img.name.split(".").slice(-1)[0]
+        : "webp";
       let path = `main/${id}/main.${extension}`;
-      const task = this.createTask(ref(this.storage, path), main_img, (url) => { //nullならなんもしない
+      const task = this.createTask(ref(this.storage, path), main_img, (url) => {
+        //nullならなんもしない
         this.data.main_img_url = url;
       });
       isNewdata(this.data, this.originalData);
@@ -372,7 +394,9 @@ export default {
               // child_img
               let PromiseArray = [];
               this.data.pls.forEach((pl, index) => {
-                let extension = pl.img ? pl.img.name.split(".").slice(-1)[0] : "webp";
+                let extension = pl.img
+                  ? pl.img.name.split(".").slice(-1)[0]
+                  : "webp";
                 let path = `child/${id}/${index + 1}.${extension}`;
                 let callback = (url) => {
                   this.data.pls[index].img_url = url;
@@ -390,7 +414,9 @@ export default {
               ).then(() => {
                 let carrouselArray = [];
                 this.data.carrouselimg.forEach((file, index) => {
-                  let extension = file ? file.name.split(".").slice(-1)[0] : "webp";
+                  let extension = file
+                    ? file.name.split(".").slice(-1)[0]
+                    : "webp";
                   let path = `carrousel/${id}/${index + 1}.${extension}`;
                   let callback = (url) => {
                     this.data.carrouselimg_url[index] = url;
@@ -402,25 +428,27 @@ export default {
                   });
                 });
                 Promise.all(
-                  carrouselArray
-                    .map((pa) => this.createTask(pa.ref, pa.file, pa.func)))
-                    .then(() => {
-                      const storedata = {
-                        title: title,
-                        number: number,
-                        id: id,
-                        youtube: youtube,
-                        kp: kp,
-                        carrouselimg: this.data.carrouselimg_url,
-                        PLs: this.data.pls.map((pl) => {
-                          const { img, img_src,...senddata} = pl;img_src;
-                          img;
-                          return senddata;
-                        }),
-                      };
-                      setDoc(doc(this.db, "child", id), storedata);
-                    })
-                
+                  carrouselArray.map((pa) =>
+                    this.createTask(pa.ref, pa.file, pa.func)
+                  )
+                ).then(() => {
+                  const storedata = {
+                    title: title,
+                    number: number,
+                    id: id,
+                    youtube: youtube,
+                    musics: musics,
+                    kp: kp,
+                    carrouselimg: this.data.carrouselimg_url,
+                    PLs: this.data.pls.map((pl) => {
+                      const { img, img_src, ...senddata } = pl;
+                      img_src;
+                      img;
+                      return senddata;
+                    }),
+                  };
+                  setDoc(doc(this.db, "child", id), storedata);
+                });
               });
               this.$bvModal.show("successmodal");
             })

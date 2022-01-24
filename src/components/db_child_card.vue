@@ -46,19 +46,20 @@
       </b-card-group>
       <v-row>
         <v-col>
-          <h3 class="mb-5 mt-5">MEMO</h3>
+          <h3 class="mb-5 mt-5">思い出</h3>
+          <hr class="my-5" />
           <slot name="memo" />
         </v-col>
         <v-col>
-          <h3 class="mb-5 mt-5">ARCHIVE</h3>
-            <b-embed
-              v-if="youtube.match(/http/)"
-              type="iframe"
-              aspect="16by9"
-              :src="youtube"
-              allowfullscreen
-            ></b-embed>
-            <h3 v-else class="mb-5 mt-5">アップロード待ち...</h3>
+          <h3 class="mb-5 mt-5">情報</h3>
+          <hr class="my-5" />
+
+            <p class="h4 mt-3"><b-icon icon="youtube" font-scale="1" animation="throb" class="mr-3"></b-icon>Archive</p>
+            <b-link :href="youtube">{{title}}:アーカイブ<b-icon icon="box-arrow-up-right" font-scale="0.7"></b-icon></b-link>
+            <p class="h4 mt-3"><b-icon icon="music-note-beamed" animation="throb" class="mr-3"></b-icon>Musics</p>
+            <ul>
+                <li v-for="music in musics" :key="music.title"><b-link :href="music.url" target="_blank" rel="noopener noreferrer">{{music.title}}<b-icon icon="box-arrow-up-right" font-scale="0.7"></b-icon></b-link></li>
+            </ul>
         </v-col>
       </v-row>
     </b-container>
@@ -125,6 +126,11 @@ export default {
       type: String,
       default: "",
       require: false,
+    },
+    musics: {
+        type: Array,
+        default: new Array(),
+        require: false,
     },
     kp: {
       type: String,
