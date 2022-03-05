@@ -3,6 +3,7 @@
     <b-card :img-src="img" img-alt="Image" img-top class="mb-2">
       <b-card-title><span class="text-break" style="border-bottom: solid 3px #87CEFA;">{{title}}</span></b-card-title>
       <b-card-text> 第{{ number }}陣 </b-card-text>
+      <b-card-text> KP:{{kp}}</b-card-text>
       <div class="mx-auto">
         <b-button-group>
           <router-link :to="{path:'/view',query: {id: id}}">
@@ -55,6 +56,11 @@ export default {
       default: new Array(),
       require: true,
     },
+    kp: {
+      type: String,
+      default: "",
+      require: false
+    }
   },
   data() {
     return {
