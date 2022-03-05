@@ -43,22 +43,25 @@ export default {
     docs.forEach((doc) => {
       this.datas.push(doc.data());
     });
+    this.originalDatas = [...this.datas];
   },
   watch:{
     sort:function(newV,oldV){
       oldV;
       console.log(newV);
+      this.$data.datas = [...this.$data.originalDatas];
       switch(newV){
         case "KP":
           this.$data.datas.sort((a,b) => a.kp > b.kp ? 1 : -1);
-          console.log("switch");
           break;
         case "id":
           this.$data.datas.sort((a,b) => a.id > b.id ? 1 : -1);
           break;
         case "hasYoutube":
+          this.$data.datas = [...this.$data.originalDatas.filter((a) => a.youtube)];
           break;
         case "hasntYoutube":
+          this.$data.datas = [...this.$data.originalDatas.filter((a) => !a.youtube)];
           break;
         case "lastUpdate":
           break;
@@ -76,13 +79,13 @@ export default {
     return {
       db: null,
       datas: [],
-      sort: null,
+      originalDatas: [],
+      sort: "id",
       options: [
-        {value: null,text:"並び替え"},
         {value: "id",text:"id順"},
         {value: "hasYoutube",text:"アーカイブあり"},
         {value: "hasntYoutube",text:"アーカイブなし"},
-        {value: "lastUpdate",text:"最終更新日"},
+        {value: "lastUpdate",text:"最終更新日",disabled:true},
         {value: "KP",text:"KP順"}
       ]
     };

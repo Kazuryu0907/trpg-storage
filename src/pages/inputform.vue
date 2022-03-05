@@ -197,7 +197,7 @@
 
 <script>
 import firebase from "../firebase";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
 import {
   getStorage,
   ref,
@@ -388,6 +388,7 @@ export default {
                 number: number,
                 id: id,
                 PLs: pls.map((pl) => pl.plname),
+                youtube: youtube == "" ? 0 : 1,
               };
               setDoc(doc(this.db, "main", id), storedata_main);
 
