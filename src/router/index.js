@@ -8,6 +8,7 @@ import NF404 from '@/pages/404'
 import inputform from '@/pages/inputform'
 import page from '@/pages/page'
 import view from '@/pages/view'
+import daice from '@/pages/daice'
 
 import inou2 from '@/pages/trpgs/inou2'
 import ga1 from '@/pages/trpgs/ga1'
@@ -45,6 +46,12 @@ export default new Router({
             path: "/login",
             name: "login",
             component: login,
+            meta: {isPublic: true}
+        },
+        {
+            path: "/daice",
+            name: "daice",
+            component: daice,
             meta: {isPublic: true}
         },
         {
