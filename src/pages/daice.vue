@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="mt-10 w-50 mx-auto">
-          <p class="logfilefont">HTMLファイルをこちらに</p>
+          <p class="logfilefont">ccfoliaのログファイル(HTML)をこちらに</p>
     <b-form-file
       class="mt-4"
       @change="logfileChange($event)"
