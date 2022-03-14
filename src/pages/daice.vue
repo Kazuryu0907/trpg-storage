@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="mt-10 w-50 mx-auto">
-          <p class="sample1">HTMLファイルをこちらに</p>
+          <p class="logfilefont">HTMLファイルをこちらに</p>
     <b-form-file
       class="mt-4"
       @change="logfileChange($event)"
@@ -109,12 +109,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 p{
     padding:0;
     margin: 0;
 }
-.sample1 {
+.logfilefont {
     font-size:2em;
     text-align:center;
     line-height:0.95em;
