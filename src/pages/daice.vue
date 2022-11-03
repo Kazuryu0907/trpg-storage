@@ -29,6 +29,7 @@ export default {
                 {key:"count",sortable:true},
                 {key:"ave",sortable:true},
                 {key:"sum",sortable:true},
+                {key:"despersion",sortable:true},
                 {key:"critical",sortable:true},
                 {key:"fumble",sortable:true}
             ]
@@ -52,10 +53,11 @@ export default {
                 const name = span[1].innerText;
                 const text = span[2].innerText;
                 if(pattern.test(text)){//CCBの時
-                    if(this.array[name] == undefined)this.array[name] = {sum:0.,i:0,ave:0.,critical:0,fumble:0};
+                    if(this.array[name] == undefined)this.array[name] = {sum:0.,i:0,ave:0.,critical:0,fumble:0,datas:[]};
                     let result = parseInt(text.match(patternMe)[1]);
                     // console.log(name+":"+result);
                     this.array[name].sum += result;
+                    this.array[name].datas.push(result);
                     this.array[name].i += 1;
                     this.array[name].critical += result <= 5 ? 1 : 0;
                     this.array[name].fumble += result >= 96 ? 1 : 0;
@@ -65,10 +67,20 @@ export default {
             for(let key of keys){
                 let average = this.array[key].sum / this.array[key].i;
                 this.array[key].ave = average.toFixed(2);
-                const {i,sum,ave,critical,fumble} = this.array[key];
-                this.items.push({name:key,count:i,sum:sum,ave:ave,critical:critical,fumble:fumble,_cellVariants:{}});
+                const {i,sum,ave,critical,fumble,datas} = this.array[key];
+                let despersion = 0;
+                for(let data of datas){
+                    despersion += Math.pow(data - ave,2)
+                }
+                despersion = despersion / i;
+                despersion = this.floorDecimal(Math.sqrt(despersion),2)
+                
+                this.items.push({name:key,count:i,sum:sum,ave:ave,critical:critical,fumble:fumble,despersion:despersion,_cellVariants:{}});
             }
             this.MinMax();
+        },
+        floorDecimal(value, n) {
+            return Math.floor(value * Math.pow(10, n) ) / Math.pow(10, n);
         },
         MinMax(){
             const items = this.items;
@@ -90,6 +102,13 @@ export default {
             const aveMaxIndex = items.reduce(searchIndex("ave",aveMax),[]);
             for(let i of aveMinIndex)this.items[i]._cellVariants.ave = "info";
             for(let i of aveMaxIndex)this.items[i]._cellVariants.ave = "danger";
+            const des = items.map((p) => p.despersion);
+            const desMin = Math.min.apply(null,des);
+            const desMax = Math.max.apply(null,des);
+            const desMinIndex = items.reduce(searchIndex("despersion",desMin),[]);
+            const desMaxIndex = items.reduce(searchIndex("despersion",desMax),[]);
+            for(let i of desMinIndex)this.items[i]._cellVariants.despersion = "info";
+            for(let i of desMaxIndex)this.items[i]._cellVariants.despersion = "danger";
             const cri = items.map((p) => p.critical);
             const criMax = Math.max.apply(null,cri);
             const criMaxIndex = items.reduce(searchIndex("critical",criMax),[]);
