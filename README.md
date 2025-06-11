@@ -1,5 +1,5 @@
 # TRPG-Storehosue
-https://kazuryu0907.github.io/bv/
+https://kazuryu0907.github.io/trpg-storage/
 # 技術スタック
 ![stack](https://github.com/Kazuryu0907/TRPG-Storehouse/assets/41988990/3c67ac5c-8807-4f5d-ba76-16b3fcb5691c)
 ## Project setup
